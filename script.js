@@ -20,7 +20,7 @@ const productsInit = () => {
                     <h3>${item.name}</h3>
                     <h2>R$ ${item.price}</h2>
                     <div class="product-line" />
-                    <button class="product-btn">Comprar</button>
+                    <p>Comprar</p>
                 </div>
             `
         })
