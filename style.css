@@ -176,9 +176,9 @@ nav {
 }
 
 .image-shadow {
-    background: #008000;
-    width: 160px;
-    height: 160px;
+    background: #00ff00;
+    width: 120px;
+    height: 120px;
     position: absolute;
     z-index: 1;
     border-radius: 50%;
