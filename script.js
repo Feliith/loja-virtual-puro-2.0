@@ -20,7 +20,7 @@ const productsInit = () => {
                     <h3>${item.name}</h3>
                     <h2>R$ ${item.price}</h2>
                     <div class="product-line" />
-                    <p>Comprar</p>
+                    <p>Comprar este produto</p>
                 </div>
             `
         })
@@ -53,3 +53,29 @@ const productsInit = () => {
     }
 }
 productsInit()
+
+const bannerInit = () => {
+    const allPromotionImg = document.querySelectorAll('.promotion-img')
+    const bannerPage = document.querySelector('.banner-page')
+
+    for (let i = 0 ; i < allPromotionImg.length ; i++) {
+        bannerPage.innerHTML += `
+            <div class="input-banner-wrap">
+                <input type="radio" name="banner" class="banner-input" />
+                <label for="banner" class="banner-label"></banner>
+            </div>
+        `
+    }
+    
+    const allBannerInput = document.querySelectorAll('.banner-input')
+    const allBannerInputWrap = document.querySelectorAll('.input-banner-wrap')
+
+    allBannerInput[0].checked = true
+
+    for (let i = 0 ; allBannerInputWrap.length ; i++) {
+        allBannerInputWrap[i].addEventListener('click', () => {
+            allBannerInput[i].checked = true
+        })
+    }
+}
+bannerInit()
