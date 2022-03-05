@@ -303,18 +303,13 @@ nav {
 }
 
 .image-shadow {
-    background: #ff3131;
+    background: #ff0000;
     width: 80px;
     height: 80px;
     position: absolute;
     z-index: 1;
     border-radius: 50%;
     filter: blur(50px);
-    opacity: .8;
-}
-
-.project:hover .image-shadow {
-    opacity: 1;
 }
 
 .image-wrap img {
