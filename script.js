@@ -13,6 +13,7 @@ const productsInit = () => {
             productsConteiner.innerHTML += `
                 <div class="product">
                     <div class="image-wrap">
+                        <div class="image-shadow"></div>
                         <img src="${item.src}" />
                     </div>
                     <button class="image-btn">Comprar</button>
