@@ -72,6 +72,7 @@ const bannerOn = () => {
 
 
 const productsInit = () => {
+    const productsWrap = document.querySelector('.products-wrap')
     const productsConteiner = document.querySelector('.products-conteiner')
 
     let pagePos = 0
@@ -125,5 +126,19 @@ const productsInit = () => {
             })
         }
     }
+
+    const scrollDetect = () => {
+
+        productsWrap.onscroll = () => {
+            const allPageIput = document.querySelectorAll('.page-input')
+
+            for (let i = 0 ; i < allPageIput.length ; i++) {
+                if (productsWrap.scrollLeft >= i * window.innerWidth - window.innerWidth / 2) {
+                    allPageIput[i].checked = true
+                }
+            }
+        }
+    }
+    scrollDetect()
 }
 productsInit()
