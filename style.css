@@ -9,6 +9,7 @@
 
 body {
     overflow-x: hidden;
+    background: #000;
 }
 
 
@@ -75,7 +76,8 @@ nav {
     background: #242424;
 }
 
-.cart-icon a {
+.cart-icon button {
+    background: none;
     color: #fff;
     width: 120px;
     display: flex;
@@ -113,10 +115,10 @@ nav {
         width: 40px;
         height: 40px;
     }
-    .cart-icon a {
+    .cart-icon button {
         justify-content: center;
     }
-    .cart-icon a p {
+    .cart-icon button p {
         display: none;
     }
 }
@@ -164,6 +166,12 @@ nav {
     right: 0;
     bottom: 0;
     left: 0;
+    opacity: 0;
+    transition: .5s;
+}
+
+.promotion-img.on source, .promotion-img.on img {
+    opacity: 1;
 }
 
 .banner-page {
@@ -252,7 +260,7 @@ nav {
 .products {
     background: #000;
     min-height: 300px;
-    padding: 80px 0;
+    margin: 60px 0;
 }
 
 .products-conteiner {
@@ -423,5 +431,12 @@ nav {
     }
     .image-btn {
         display: none;
+    }
+    .input-wrap {
+        width: 12px;
+        height: 12px;
+    }
+    .page-label {
+        border-radius: 50%;
     }
 }

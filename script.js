@@ -1,6 +1,76 @@
 import productsQuant from './data/Quant.js'
 import Products from './data/Products.js'
 
+
+
+let bannerPos = 0
+
+const bannerInit = () => {
+    const allPromotionImg = document.querySelectorAll('.promotion-img')
+    allPromotionImg[bannerPos].classList.add('on')
+
+    const bannerPage = document.querySelector('.banner-page')
+
+    for (let i = 0 ; i < allPromotionImg.length ; i++) {
+        bannerPage.innerHTML += `
+            <div class="input-banner-wrap">
+                <input type="radio" name="banner" class="banner-input" />
+                <label for="banner" class="banner-label"></banner>
+            </div>
+        `
+    }
+    
+    const allBannerInput = document.querySelectorAll('.banner-input')
+    const allBannerInputWrap = document.querySelectorAll('.input-banner-wrap')
+
+    allBannerInput[0].checked = true
+
+    for (let i = 0 ; i < allBannerInputWrap.length ; i++) {
+        allBannerInputWrap[i].addEventListener('click', () => {
+            allBannerInput[i].checked = true
+            bannerPos = i
+            bannerOn()
+        })
+    }
+}
+bannerInit()
+
+const bannerSlider = () => {
+    const bannerButton = document.querySelectorAll('.slider-button')
+    const allBannerInput = document.querySelectorAll('.banner-input')
+
+    bannerButton[0].addEventListener('click', () => {
+        if (bannerPos == allBannerInput.length - 1) {
+            bannerPos--
+        } else {
+            bannerPos = allBannerInput.length - 1
+        }
+        allBannerInput[bannerPos].checked = true
+        bannerOn()
+    })
+
+    bannerButton[1].addEventListener('click', () => {
+        if (bannerPos == 0) {
+            bannerPos++
+        } else {
+            bannerPos = 0
+        }
+        allBannerInput[bannerPos].checked = true
+        bannerOn()
+    })
+}
+bannerSlider()
+
+const bannerOn = () => {
+    const promotionImageOn = document.querySelector('.promotion-img.on')
+    promotionImageOn.classList.remove('on')
+
+    const allPromotionImg = document.querySelectorAll('.promotion-img')
+    allPromotionImg[bannerPos].classList.add('on')
+}
+
+
+
 const productsInit = () => {
     const productsConteiner = document.querySelector('.products-conteiner')
 
@@ -39,7 +109,7 @@ const productsInit = () => {
                 </div>
             `
         }
-        const allPageIput = document.querySelectorAll(".page-input")
+        const allPageIput = document.querySelectorAll('.page-input')
         const allInputWrap = document.querySelectorAll('.input-wrap')
 
         allPageIput[0].checked = true
@@ -52,36 +122,8 @@ const productsInit = () => {
 
                 const productsWrap = document.querySelector('.products-wrap')
                 productsWrap.scrollLeft = i * window.innerWidth
-
-                console.log(window.innerWidth)
             })
         }
     }
 }
 productsInit()
-
-const bannerInit = () => {
-    const allPromotionImg = document.querySelectorAll('.promotion-img')
-    const bannerPage = document.querySelector('.banner-page')
-
-    for (let i = 0 ; i < allPromotionImg.length ; i++) {
-        bannerPage.innerHTML += `
-            <div class="input-banner-wrap">
-                <input type="radio" name="banner" class="banner-input" />
-                <label for="banner" class="banner-label"></banner>
-            </div>
-        `
-    }
-    
-    const allBannerInput = document.querySelectorAll('.banner-input')
-    const allBannerInputWrap = document.querySelectorAll('.input-banner-wrap')
-
-    allBannerInput[0].checked = true
-
-    for (let i = 0 ; allBannerInputWrap.length ; i++) {
-        allBannerInputWrap[i].addEventListener('click', () => {
-            allBannerInput[i].checked = true
-        })
-    }
-}
-bannerInit()
