@@ -9,7 +9,7 @@ const productsInit = () => {
     const pageInit = () => {
         productsConteiner.innerHTML = ''
 
-        Products[pagePos].map((item, index) => {
+        Products.map((item, index) => {
             productsConteiner.innerHTML += `
                 <div class="product">
                     <div class="image-wrap">
@@ -30,26 +30,32 @@ const productsInit = () => {
 
     const pageSelect = document.querySelector('.page-select')
 
-    for (let i = 0 ; i < Products.length ; i++) {
-        pageSelect.innerHTML += `
-            <div class="input-wrap">
-                <input type="radio" name="page" class="page-input" />
-                <label for="page" class="page-label"></label>
-            </div>
-        `
-    }
+    if (window.innerWidth < 800) {
+        for (let i = 0 ; i < Products.length ; i++) {
+            pageSelect.innerHTML += `
+                <div class="input-wrap">
+                    <input type="radio" name="page" class="page-input" />
+                    <label for="page" class="page-label"></label>
+                </div>
+            `
+        }
+        const allPageIput = document.querySelectorAll(".page-input")
+        const allInputWrap = document.querySelectorAll('.input-wrap')
 
-    const allPageIput = document.querySelectorAll(".page-input")
-    const allInputWrap = document.querySelectorAll('.input-wrap')
+        allPageIput[0].checked = true
 
-    allPageIput[0].checked = true
+        for (let i = 0 ; i < allInputWrap.length ; i++) {
+            allInputWrap[i].addEventListener('click', () => {
+                allPageIput[i].checked = true
+                pagePos = i
+                pageInit()
 
-    for (let i = 0 ; i < allInputWrap.length ; i++) {
-        allInputWrap[i].addEventListener('click', () => {
-            allPageIput[i].checked = true
-            pagePos = i
-            pageInit()
-        })
+                const productsWrap = document.querySelector('.products-wrap')
+                productsWrap.scrollLeft = i * window.innerWidth
+
+                console.log(window.innerWidth)
+            })
+        }
     }
 }
 productsInit()

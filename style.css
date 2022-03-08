@@ -7,6 +7,11 @@
     padding: 0;
 }
 
+body {
+    overflow-x: hidden;
+}
+
+
 nav {
     background: #000;
     height: 80px;
@@ -97,8 +102,12 @@ nav {
 }
 
 @media screen and (max-width: 500px) {
+    nav {
+        padding: 0 20px;
+    }
     .search-bar {
-        width: 80%;
+        width: 100%;
+        margin-right: 12px;
     }
     .cart-icon {
         width: 40px;
@@ -113,9 +122,6 @@ nav {
 }
 
 @media screen and (max-width: 400px) {
-    nav {
-        padding: 0 20px;
-    }
     .search-bar input::placeholder {
         opacity: 0;
     }
@@ -237,7 +243,7 @@ nav {
 @media screen and (max-width: 600px) {
     .slider-button {
         top: unset;
-        bottom: -30px;
+        bottom: -54px;
     }
 }
 
@@ -303,7 +309,7 @@ nav {
 }
 
 .image-shadow {
-    background: #ff0000;
+    background: #008000;
     width: 80px;
     height: 80px;
     position: absolute;
@@ -394,4 +400,28 @@ nav {
     bottom: 0;
     left: 0;
     cursor: pointer;
+}
+
+@media screen and (max-width: 800px) {
+    .products-wrap {
+        overflow-y: hidden;
+        overflow-x: scroll;
+        scroll-behavior: smooth;
+    }
+    .products-wrap::-webkit-scrollbar {
+        opacity: 0;
+    }
+    .products-conteiner {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        width: calc(800%);
+    }
+    .product {
+        width: 100vw;
+        margin: 0;
+        padding: 0 80px;
+    }
+    .image-btn {
+        display: none;
+    }
 }
