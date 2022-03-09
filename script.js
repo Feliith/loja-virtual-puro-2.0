@@ -1,6 +1,5 @@
-import productsQuant from './data/Quant.js'
 import Products from './data/Products.js'
-
+import Cart from './data/Cart.js'
 
 
 let bannerPos = 0
@@ -71,6 +70,55 @@ const bannerOn = () => {
 
 
 
+const productPage = (src, name, price) => {
+    const productPageWrap = document.querySelector('.product-page-wrap')
+
+    productPageWrap.classList.add('on')
+
+    productPageWrap.innerHTML += `
+        <div class="product-page-conteiner">
+            <button class="product-page-close">x</button>
+            <img src="${src}" />
+            <h3>${name}</h3>
+            <h2>${price}</h2>
+            <div class="quant-select">
+                <button class="quant-btn">-</button>
+                <p class="quant-num">1</p>
+                <button class="quant-btn">+</button>
+            </div>
+            <button class="add-cart-btn">Adicionar ao carrinho</button>
+        </div>
+    `
+
+    const productPageClose = document.querySelector('.product-page-close')
+
+    productPageClose.addEventListener('click', () => {
+        productPageWrap.classList.remove('on')
+        productPageWrap.innerHTML = ''
+    })
+
+    quantSelect()
+
+    const addCartButton = document.querySelector('.add-cart-btn')
+
+    addCartButton.onclick = () => {
+        addCart(src, name, price)
+        cartUpdate()
+    }
+}
+
+const productInfos = (i) => {
+    const productImage = document.querySelectorAll('.product img')
+    const productH3 = document.querySelectorAll('.product h3')
+    const productH2 = document.querySelectorAll('.product h2')
+
+    const src = productImage[i].getAttribute('src')
+    const name = productH3[i].innerText
+    const price = productH2[i].innerText
+
+    productPage(src, name, price)
+}
+
 const productsInit = () => {
     const productsWrap = document.querySelector('.products-wrap')
     const productsConteiner = document.querySelector('.products-conteiner')
@@ -140,5 +188,71 @@ const productsInit = () => {
         }
     }
     scrollDetect()
+
+    const allProducts = document.querySelectorAll('.product')
+
+    for (let i = 0 ; i < allProducts.length ; i++) {
+        allProducts[i].addEventListener('click', () => {
+            productInfos(i)
+        })
+    }
 }
 productsInit()
+
+let quant = 1
+
+const quantSelect = () => {
+    const allQuantButton = document.querySelectorAll('.quant-btn')
+    const quantNumber = document.querySelector('.quant-num')
+    
+    quant = 1
+
+    allQuantButton[0].onclick = () => {
+        if (quant > 1) {
+            quant--
+            quantNumber.innerText = quant
+        }
+    }
+
+    allQuantButton[1].onclick = () => {
+        quant++
+        quantNumber.innerText = quant
+    }
+}
+
+let productAdded = []
+
+const addCart = (src, name, price) => {
+    productAdded = [{src: `${src}`, name: `${name}`, price: `${price}`, quant: `${quant}`}]
+    Cart.push(productAdded)
+}
+
+const cartInit = () => {
+    
+    const cartButton = document.querySelector('.cart-icon')
+    const cartConteiner = document.querySelector('.cart')
+    const cartClose = document.querySelector('.cart-close')
+    
+    cartButton.onclick = () => {
+        cartConteiner.classList.add('on')
+    }
+
+    cartClose.onclick = () => {
+        cartConteiner.classList.remove('on')
+    }
+}
+cartInit()
+
+const cartUpdate = () => {
+    const cartProducts = document.querySelector('.cart-products')
+
+    Cart.map((item, index) => {
+        cartProducts.innerHTML += `
+            <div class='cart-product>
+                <img src="${item.src}" />
+                <h3>${item.name}</h3>
+            </div>
+        `
+    })
+    console.log(Cart)
+}
