@@ -97,6 +97,18 @@ const productPage = (src, name, price) => {
         productPageWrap.innerHTML = ''
     })
 
+    const addCartBtn = document.querySelector('.add-cart-btn')
+    const productBuyed = document.querySelector('.product-buyed')
+
+    addCartBtn.addEventListener('click', () => {
+        productPageWrap.classList.remove('on')
+        productPageWrap.innerHTML = ''
+        productBuyed.classList.add('on')
+        setTimeout(() => {
+            productBuyed.classList.remove('on')
+        }, 1000)
+    })
+
     quantSelect()
 
     const addCartButton = document.querySelector('.add-cart-btn')
@@ -223,11 +235,12 @@ const quantSelect = () => {
 let productAdded = []
 
 const addCart = (src, name, price) => {
-    productAdded = [{src: `${src}`, name: `${name}`, price: `${price}`, quant: `${quant}`}]
+    productAdded = {src: `${src}`, name: `${name}`, price: `${price}`, quant: `${quant}`}
     Cart.push(productAdded)
 }
 
 const cartInit = () => {
+    const body = document.querySelector('body')
     
     const cartButton = document.querySelector('.cart-icon')
     const cartConteiner = document.querySelector('.cart')
@@ -235,10 +248,12 @@ const cartInit = () => {
     
     cartButton.onclick = () => {
         cartConteiner.classList.add('on')
+        body.style.overflow = 'hidden'
     }
 
     cartClose.onclick = () => {
         cartConteiner.classList.remove('on')
+        body.style.overflow = ''
     }
 }
 cartInit()
@@ -248,9 +263,20 @@ const cartUpdate = () => {
 
     Cart.map((item, index) => {
         cartProducts.innerHTML += `
-            <div class='cart-product>
-                <img src="${item.src}" />
-                <h3>${item.name}</h3>
+            <div class='cart-product'>
+                <div class="cart-product-img">
+                    <img src="${item.src}" />
+                </div>
+                <div class="cart-product-info">
+                    <h3>${item.name}</h3>
+                    <h2>${item.price}</h2>
+                </div>
+                <div class="quant-select-cart">
+                    <button class="quant-btn-cart">-</button>
+                    <p class="quant-num-cart">${item.quant}</p>
+                    <button class="quant-btn-cart">+</button>
+                </div>
+                <button class="buy-one-btn">Comprar</button>
             </div>
         `
     })
