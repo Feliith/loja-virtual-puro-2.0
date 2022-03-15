@@ -478,15 +478,17 @@ nav {
     position: absolute;
     top: 6px;
     right: 8px;
-    width: 40px;
-    height: 40px;
-    font-size: 50px;
-    font-weight: 300;
+    width: 50px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: .3s;
+}
+
+.product-page-close img {
+    max-width: 100%;
 }
 
 .product-page-close:hover {
@@ -607,12 +609,10 @@ nav {
     background: none;
     border: none;
     position: absolute;
-    top: 24px;
+    top: 16px;
     right: 18px;
-    width: 30px;
-    height: 30px;
-    font-size: 36px;
-    font-weight: 300;
+    width: 50px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -621,13 +621,17 @@ nav {
     z-index: inherit;
 }
 
+.cart-close img {
+    max-width: 100%;
+}
+
 .cart-close:hover {
     transform: scale(.9);
     opacity: .8;
 }
 
 .cart h1 {
-    background: #fd6868;
+    background: #ff5b5b;
     color: #fff;
     width: 100%;
     height: 80px;

@@ -77,7 +77,9 @@ const productPage = (src, name, price) => {
 
     productPageWrap.innerHTML += `
         <div class="product-page-conteiner">
-            <button class="product-page-close">x</button>
+            <button class="product-page-close">
+                <img src="images/icons/cross.png" alt="x" />
+            </button>
             <img src="${src}" />
             <h3>${name}</h3>
             <h2>${price}</h2>
@@ -159,47 +161,19 @@ const productsInit = () => {
 
     pageInit()
 
-    const pageSelect = document.querySelector('.page-select')
+    // const scrollDetect = () => {
 
-    if (window.innerWidth < 800) {
-        for (let i = 0 ; i < Products.length ; i++) {
-            pageSelect.innerHTML += `
-                <div class="input-wrap">
-                    <input type="radio" name="page" class="page-input" />
-                    <label for="page" class="page-label"></label>
-                </div>
-            `
-        }
-        const allPageIput = document.querySelectorAll('.page-input')
-        const allInputWrap = document.querySelectorAll('.input-wrap')
+    //     productsWrap.onscroll = () => {
+    //         const allPageIput = document.querySelectorAll('.page-input')
 
-        allPageIput[0].checked = true
-
-        for (let i = 0 ; i < allInputWrap.length ; i++) {
-            allInputWrap[i].addEventListener('click', () => {
-                allPageIput[i].checked = true
-                pagePos = i
-                pageInit()
-
-                const productsWrap = document.querySelector('.products-wrap')
-                productsWrap.scrollLeft = i * window.innerWidth
-            })
-        }
-    }
-
-    const scrollDetect = () => {
-
-        productsWrap.onscroll = () => {
-            const allPageIput = document.querySelectorAll('.page-input')
-
-            for (let i = 0 ; i < allPageIput.length ; i++) {
-                if (productsWrap.scrollLeft >= i * window.innerWidth - window.innerWidth / 2) {
-                    allPageIput[i].checked = true
-                }
-            }
-        }
-    }
-    scrollDetect()
+    //         for (let i = 0 ; i < allPageIput.length ; i++) {
+    //             if (productsWrap.scrollLeft >= i * window.innerWidth - window.innerWidth / 2) {
+    //                 allPageIput[i].checked = true
+    //             }
+    //         }
+    //     }
+    // }
+    // scrollDetect()
 
     const allProducts = document.querySelectorAll('.product')
 
@@ -233,10 +207,29 @@ const quantSelect = () => {
 }
 
 let productAdded = []
+let firstItem = true
+let idItem = 0
 
 const addCart = (src, name, price) => {
-    productAdded = {src: `${src}`, name: `${name}`, price: `${price}`, quant: `${quant}`}
-    Cart.push(productAdded)
+    productAdded = {src: `${src}`, name: `${name}`, price: `${price}`, quant: `${quant}`, id: idItem}
+
+    if (firstItem) {
+        firstItem = false
+        Cart.push(productAdded)
+    } else {
+        addItem(idItem, name)
+    }
+}
+
+const addItem = (index, name) => {
+    let cartContent = Cart[index]["name"]
+
+    if (!cartContent.includes(name)) {
+        Cart.push(productAdded)
+        idItem++
+    } else {
+        Cart[index]["quant"]++
+    }
 }
 
 const cartInit = () => {
@@ -261,6 +254,8 @@ cartInit()
 const cartUpdate = () => {
     const cartProducts = document.querySelector('.cart-products')
 
+    cartProducts.innerHTML = ''
+
     Cart.map((item, index) => {
         cartProducts.innerHTML += `
             <div class='cart-product'>
@@ -272,13 +267,38 @@ const cartUpdate = () => {
                     <h2>${item.price}</h2>
                 </div>
                 <div class="quant-select-cart">
-                    <button class="quant-btn-cart">-</button>
+                    <button class="quant-btn-cart sub">-</button>
                     <p class="quant-num-cart">${item.quant}</p>
-                    <button class="quant-btn-cart">+</button>
+                    <button class="quant-btn-cart add">+</button>
                 </div>
                 <button class="buy-one-btn">Comprar</button>
             </div>
         `
+        cartQuantFunc(index)
     })
-    console.log(Cart)
 }
+
+const cartQuantFunc = (index) => {
+    const quantNumCart = document.querySelectorAll('.quant-num-cart')
+    const cartQuantAdd = document.querySelectorAll('.quant-btn-cart.add')
+    const cartQuantSub = document.querySelectorAll('.quant-btn-cart.sub')
+
+    let cartQuant = Cart[index]["quant"]
+
+    cartQuantSub[index].onclick = () => {
+        if (cartQuant > 1) {
+            cartQuant--
+            quantNumCart[index].innerText = cartQuant
+            Cart[index]["quant"] = cartQuant
+            cartUpdate()
+        }
+    }
+
+    cartQuantAdd[index].onclick = () => {
+        cartQuant++
+        quantNumCart.innerText = cartQuant
+        Cart[index]["quant"] = cartQuant
+        cartUpdate()
+    }
+}
+
