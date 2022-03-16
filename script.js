@@ -136,6 +136,7 @@ const productInfos = (i) => {
 const productsInit = () => {
     const productsWrap = document.querySelector('.products-wrap')
     const productsConteiner = document.querySelector('.products-conteiner')
+    const productSlider = document.querySelector('.product-slider')
 
     let pagePos = 0
 
@@ -156,26 +157,43 @@ const productsInit = () => {
                     <p>Comprar este produto</p>
                 </div>
             `
+            if (window.innerWidth < 800) {
+                productSlider.innerHTML += `
+                    <button class="slider-input-wrap" id="${index}">
+                        <input type="radio" name="slider" class="slider-input" />
+                        <label class="slider-label"></label>
+                    </button>
+                `
+            }
         })
     }
 
     pageInit()
 
-    // const scrollDetect = () => {
+    const allInputWrap = document.querySelectorAll('.slider-input-wrap')
+    const allSliderInput = document.querySelectorAll('.slider-input')
+    allSliderInput[0].checked = true
 
-    //     productsWrap.onscroll = () => {
-    //         const allPageIput = document.querySelectorAll('.page-input')
+    for (let i = 0 ; i < allInputWrap.length ; i++) {
+        allInputWrap[i].addEventListener('click', () => {
+            allSliderInput[i].checked = true
+            sliderScroll(i)
+        })
+    }
 
-    //         for (let i = 0 ; i < allPageIput.length ; i++) {
-    //             if (productsWrap.scrollLeft >= i * window.innerWidth - window.innerWidth / 2) {
-    //                 allPageIput[i].checked = true
-    //             }
-    //         }
-    //     }
-    // }
-    // scrollDetect()
+    const sliderScroll = (i) => {
+        productsWrap.scrollLeft = allProducts[0].offsetWidth * i
+    }
 
     const allProducts = document.querySelectorAll('.product')
+
+    productsWrap.onscroll = () => {
+        for (let i = 0 ; i < allProducts.length ; i++) {
+            if (productsWrap.scrollLeft >= i * window.innerWidth - window.innerWidth / 2) {
+                allSliderInput[i].checked = true
+            }
+        }
+    }
 
     for (let i = 0 ; i < allProducts.length ; i++) {
         allProducts[i].addEventListener('click', () => {
